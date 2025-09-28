@@ -9,15 +9,14 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface RoomRepository extends JpaRepository<Room, Long>, JpaSpecificationExecutor<Room> {
 
-    @Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId")
-    List<Room> findByHotelId(@Param("hotelId") Long hotelId);
+    List<Room> findByHotelId(Long hotelId);
 
-    @Query("SELECT r FROM Room r WHERE r.roomNumber = :roomNumber")
-    Room findByRoomNumber(@Param("roomNumber") String roomNumber);
+    Optional<Room> findByRoomNumber(String roomNumber);
 
     @Query("SELECT r FROM Room r WHERE r.hotel.id = :hotelId AND " +
            "NOT EXISTS (SELECT b FROM Booking b WHERE b.room = r AND " +

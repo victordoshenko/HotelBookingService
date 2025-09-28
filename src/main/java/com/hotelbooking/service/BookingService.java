@@ -87,7 +87,7 @@ public class BookingService {
 
     public PageResponseDto<BookingResponseDto> getAllBookings(int page, int size) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Booking> bookingPage = bookingRepository.findAllWithPagination(pageable);
+        Page<Booking> bookingPage = bookingRepository.findAll(pageable);
         
         List<BookingResponseDto> bookingDtos = bookingPage.getContent()
                 .stream()

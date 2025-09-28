@@ -14,11 +14,9 @@ import java.util.List;
 @Repository
 public interface BookingRepository extends JpaRepository<Booking, Long> {
 
-    @Query("SELECT b FROM Booking b WHERE b.user.id = :userId")
-    List<Booking> findByUserId(@Param("userId") Long userId);
+    List<Booking> findByUserId(Long userId);
 
-    @Query("SELECT b FROM Booking b WHERE b.room.id = :roomId")
-    List<Booking> findByRoomId(@Param("roomId") Long roomId);
+    List<Booking> findByRoomId(Long roomId);
 
     @Query("SELECT b FROM Booking b WHERE b.room.id = :roomId AND " +
            "((b.checkInDate <= :checkInDate AND b.checkOutDate > :checkInDate) OR " +
@@ -28,6 +26,5 @@ public interface BookingRepository extends JpaRepository<Booking, Long> {
                                          @Param("checkInDate") LocalDate checkInDate, 
                                          @Param("checkOutDate") LocalDate checkOutDate);
 
-    @Query("SELECT b FROM Booking b")
-    Page<Booking> findAllWithPagination(Pageable pageable);
+    Page<Booking> findAll(Pageable pageable);
 }
