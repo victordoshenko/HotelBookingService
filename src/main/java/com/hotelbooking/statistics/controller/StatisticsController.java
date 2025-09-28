@@ -2,6 +2,7 @@ package com.hotelbooking.statistics.controller;
 
 import com.hotelbooking.statistics.entity.StatisticsEvent;
 import com.hotelbooking.statistics.service.StatisticsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -14,13 +15,10 @@ import jakarta.servlet.http.HttpServletResponse;
 @RestController
 @RequestMapping("/api/statistics")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class StatisticsController {
 
     private final StatisticsService statisticsService;
-
-    public StatisticsController(StatisticsService statisticsService) {
-        this.statisticsService = statisticsService;
-    }
 
     @GetMapping
     @PreAuthorize("hasRole('ADMIN')")

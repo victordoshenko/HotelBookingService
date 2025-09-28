@@ -5,6 +5,7 @@ import com.hotelbooking.dto.BookingResponseDto;
 import com.hotelbooking.dto.PageResponseDto;
 import com.hotelbooking.service.BookingService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,10 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/bookings")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class BookingController {
 
     private final BookingService bookingService;
-
-    public BookingController(BookingService bookingService) {
-        this.bookingService = bookingService;
-    }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

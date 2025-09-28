@@ -15,6 +15,7 @@ import com.hotelbooking.repository.RoomRepository;
 import com.hotelbooking.repository.UserRepository;
 import com.hotelbooking.statistics.event.BookingEvent;
 import com.hotelbooking.statistics.service.EventProducerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class BookingService {
 
     private final BookingRepository bookingRepository;
@@ -34,15 +36,6 @@ public class BookingService {
     private final UserRepository userRepository;
     private final BookingMapper bookingMapper;
     private final EventProducerService eventProducerService;
-
-    public BookingService(BookingRepository bookingRepository, RoomRepository roomRepository, 
-                         UserRepository userRepository, BookingMapper bookingMapper, EventProducerService eventProducerService) {
-        this.bookingRepository = bookingRepository;
-        this.roomRepository = roomRepository;
-        this.userRepository = userRepository;
-        this.bookingMapper = bookingMapper;
-        this.eventProducerService = eventProducerService;
-    }
 
     public BookingResponseDto createBooking(BookingRequestDto bookingRequestDto, Long userId) {
         // Validate dates

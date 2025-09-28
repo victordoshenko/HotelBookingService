@@ -2,6 +2,7 @@ package com.hotelbooking.statistics.service;
 
 import com.hotelbooking.statistics.entity.StatisticsEvent;
 import com.hotelbooking.statistics.repository.StatisticsEventRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -14,13 +15,10 @@ import java.util.List;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
+@RequiredArgsConstructor
 public class StatisticsService {
 
     private final StatisticsEventRepository statisticsEventRepository;
-
-    public StatisticsService(StatisticsEventRepository statisticsEventRepository) {
-        this.statisticsEventRepository = statisticsEventRepository;
-    }
 
     @KafkaListener(topics = "user-registration-events", groupId = "hotel-booking-stats")
     public void handleUserRegistrationEvent(String eventData) {

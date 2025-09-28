@@ -3,19 +3,16 @@ package com.hotelbooking.statistics.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.statistics.event.BookingEvent;
 import com.hotelbooking.statistics.event.UserRegistrationEvent;
+import lombok.RequiredArgsConstructor;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class EventProducerService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
-
-    public EventProducerService(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper objectMapper) {
-        this.kafkaTemplate = kafkaTemplate;
-        this.objectMapper = objectMapper;
-    }
 
     public void sendUserRegistrationEvent(UserRegistrationEvent event) {
         try {

@@ -9,6 +9,7 @@ import com.hotelbooking.mapper.UserMapper;
 import com.hotelbooking.repository.UserRepository;
 import com.hotelbooking.statistics.event.UserRegistrationEvent;
 import com.hotelbooking.statistics.service.EventProducerService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,19 +19,13 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
     private final PasswordEncoder passwordEncoder;
     private final EventProducerService eventProducerService;
-
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, EventProducerService eventProducerService) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-        this.eventProducerService = eventProducerService;
-    }
 
     public UserResponseDto createUser(UserRequestDto userRequestDto) {
         // Check if user already exists

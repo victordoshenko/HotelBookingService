@@ -5,6 +5,7 @@ import com.hotelbooking.dto.HotelResponseDto;
 import com.hotelbooking.dto.PageResponseDto;
 import com.hotelbooking.service.HotelService;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,13 +14,10 @@ import java.math.BigDecimal;
 @RestController
 @RequestMapping("/api/hotels")
 @CrossOrigin(origins = "*")
+@RequiredArgsConstructor
 public class HotelController {
 
     private final HotelService hotelService;
-
-    public HotelController(HotelService hotelService) {
-        this.hotelService = hotelService;
-    }
 
     @GetMapping("/{id}")
     public HotelResponseDto getHotelById(@PathVariable Long id) {

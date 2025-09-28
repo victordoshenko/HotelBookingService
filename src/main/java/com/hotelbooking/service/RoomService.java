@@ -11,7 +11,7 @@ import com.hotelbooking.mapper.RoomMapper;
 import com.hotelbooking.repository.HotelRepository;
 import com.hotelbooking.repository.RoomRepository;
 import com.hotelbooking.repository.RoomSpecificationBuilder;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -27,17 +27,12 @@ import java.util.stream.Collectors;
 
 @Service
 @Transactional
+@RequiredArgsConstructor
 public class RoomService {
 
     private final RoomRepository roomRepository;
     private final HotelRepository hotelRepository;
     private final RoomMapper roomMapper;
-
-    public RoomService(RoomRepository roomRepository, HotelRepository hotelRepository, RoomMapper roomMapper) {
-        this.roomRepository = roomRepository;
-        this.hotelRepository = hotelRepository;
-        this.roomMapper = roomMapper;
-    }
 
     public RoomResponseDto createRoom(RoomRequestDto roomRequestDto) {
         Hotel hotel = hotelRepository.findById(roomRequestDto.getHotelId())
