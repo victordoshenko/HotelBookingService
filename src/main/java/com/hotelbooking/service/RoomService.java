@@ -10,7 +10,8 @@ import com.hotelbooking.exception.RoomNotFoundException;
 import com.hotelbooking.mapper.RoomMapper;
 import com.hotelbooking.repository.HotelRepository;
 import com.hotelbooking.repository.RoomRepository;
-import com.hotelbooking.controller.RoomSpecificationBuilder;
+import com.hotelbooking.repository.RoomSpecificationBuilder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

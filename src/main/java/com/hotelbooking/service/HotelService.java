@@ -7,7 +7,8 @@ import com.hotelbooking.entity.Hotel;
 import com.hotelbooking.exception.HotelNotFoundException;
 import com.hotelbooking.mapper.HotelMapper;
 import com.hotelbooking.repository.HotelRepository;
-import com.hotelbooking.controller.HotelSpecificationBuilder;
+import com.hotelbooking.repository.HotelSpecificationBuilder;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

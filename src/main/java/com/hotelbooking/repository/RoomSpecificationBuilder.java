@@ -1,4 +1,4 @@
-package com.hotelbooking.controller;
+package com.hotelbooking.repository;
 
 import com.hotelbooking.entity.Room;
 import org.springframework.data.jpa.domain.Specification;
