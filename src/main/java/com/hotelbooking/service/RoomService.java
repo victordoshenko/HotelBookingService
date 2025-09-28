@@ -10,6 +10,7 @@ import com.hotelbooking.exception.RoomNotFoundException;
 import com.hotelbooking.mapper.RoomMapper;
 import com.hotelbooking.repository.HotelRepository;
 import com.hotelbooking.repository.RoomRepository;
+import com.hotelbooking.controller.RoomSpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -19,6 +20,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -121,5 +123,30 @@ public class RoomService {
         return availableRooms.stream()
                 .map(roomMapper::toResponseDto)
                 .collect(Collectors.toList());
+    }
+
+    public PageResponseDto<RoomResponseDto> searchRoomsWithParams(
+            Long id, String name, String roomNumber, String minPrice, String maxPrice,
+            Integer maxCapacity, String checkInDate, String checkOutDate, Long hotelId,
+            int page, int size, String sortBy, String sortDir) {
+        
+        // Parse parameters
+        BigDecimal minPriceDecimal = minPrice != null ? new BigDecimal(minPrice) : null;
+        BigDecimal maxPriceDecimal = maxPrice != null ? new BigDecimal(maxPrice) : null;
+        LocalDate checkIn = checkInDate != null ? LocalDate.parse(checkInDate) : null;
+        LocalDate checkOut = checkOutDate != null ? LocalDate.parse(checkOutDate) : null;
+        
+        // Build specification
+        Specification<Room> specification = RoomSpecificationBuilder.build(
+                id, name, roomNumber, minPriceDecimal, maxPriceDecimal, 
+                maxCapacity, checkIn, checkOut, hotelId);
+        
+        return searchRooms(specification, page, size, sortBy, sortDir);
+    }
+
+    public List<RoomResponseDto> getAvailableRoomsWithDateStrings(Long hotelId, String checkInDate, String checkOutDate) {
+        LocalDate checkIn = LocalDate.parse(checkInDate);
+        LocalDate checkOut = LocalDate.parse(checkOutDate);
+        return getAvailableRooms(hotelId, checkIn, checkOut);
     }
 }

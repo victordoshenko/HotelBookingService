@@ -3,11 +3,9 @@ package com.hotelbooking.controller;
 import com.hotelbooking.dto.HotelRequestDto;
 import com.hotelbooking.dto.HotelResponseDto;
 import com.hotelbooking.dto.PageResponseDto;
-import com.hotelbooking.entity.Hotel;
 import com.hotelbooking.service.HotelService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -81,9 +79,8 @@ public class HotelController {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         
-        Specification<Hotel> specification = HotelSpecificationBuilder.build(
-                id, name, title, city, address, distanceFromCenter, rating, numberOfRatings);
-        
-        return hotelService.searchHotels(specification, page, size, sortBy, sortDir);
+        return hotelService.searchHotelsWithParams(
+                id, name, title, city, address, distanceFromCenter, rating, numberOfRatings,
+                page, size, sortBy, sortDir);
     }
 }

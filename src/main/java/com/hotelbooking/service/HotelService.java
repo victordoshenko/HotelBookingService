@@ -7,6 +7,7 @@ import com.hotelbooking.entity.Hotel;
 import com.hotelbooking.exception.HotelNotFoundException;
 import com.hotelbooking.mapper.HotelMapper;
 import com.hotelbooking.repository.HotelRepository;
+import com.hotelbooking.controller.HotelSpecificationBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -107,6 +108,17 @@ public class HotelService {
                 hotelPage.isFirst(),
                 hotelPage.isLast()
         );
+    }
+
+    public PageResponseDto<HotelResponseDto> searchHotelsWithParams(
+            Long id, String name, String title, String city, String address,
+            BigDecimal distanceFromCenter, BigDecimal rating, Integer numberOfRatings,
+            int page, int size, String sortBy, String sortDir) {
+        
+        Specification<Hotel> specification = HotelSpecificationBuilder.build(
+                id, name, title, city, address, distanceFromCenter, rating, numberOfRatings);
+        
+        return searchHotels(specification, page, size, sortBy, sortDir);
     }
 
     public HotelResponseDto updateHotelRating(Long id, BigDecimal newRating) {

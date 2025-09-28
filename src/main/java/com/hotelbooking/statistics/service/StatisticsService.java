@@ -3,6 +3,7 @@ package com.hotelbooking.statistics.service;
 import com.hotelbooking.statistics.entity.StatisticsEvent;
 import com.hotelbooking.statistics.repository.StatisticsEventRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 
@@ -11,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.util.List;
+import jakarta.servlet.http.HttpServletResponse;
 
 @Service
 public class StatisticsService {
@@ -79,5 +81,15 @@ public class StatisticsService {
         writer.close();
         
         return outputStream.toByteArray();
+    }
+
+    public byte[] exportToCsvWithHeaders(HttpServletResponse response) throws IOException {
+        byte[] csvData = exportToCsv();
+        
+        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
+        response.setHeader("Content-Disposition", "attachment; filename=statistics.csv");
+        response.setContentLength(csvData.length);
+        
+        return csvData;
     }
 }

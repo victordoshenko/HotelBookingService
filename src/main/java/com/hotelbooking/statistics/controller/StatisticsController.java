@@ -39,12 +39,6 @@ public class StatisticsController {
     @GetMapping("/export/csv")
     @PreAuthorize("hasRole('ADMIN')")
     public byte[] exportToCsv(HttpServletResponse response) throws IOException {
-        byte[] csvData = statisticsService.exportToCsv();
-        
-        response.setContentType(MediaType.APPLICATION_OCTET_STREAM_VALUE);
-        response.setHeader("Content-Disposition", "attachment; filename=statistics.csv");
-        response.setContentLength(csvData.length);
-        
-        return csvData;
+        return statisticsService.exportToCsvWithHeaders(response);
     }
 }

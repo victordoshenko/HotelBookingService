@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @RestController
@@ -64,16 +63,9 @@ public class RoomController {
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         
-        java.math.BigDecimal minPriceDecimal = minPrice != null ? new java.math.BigDecimal(minPrice) : null;
-        java.math.BigDecimal maxPriceDecimal = maxPrice != null ? new java.math.BigDecimal(maxPrice) : null;
-        java.time.LocalDate checkIn = checkInDate != null ? java.time.LocalDate.parse(checkInDate) : null;
-        java.time.LocalDate checkOut = checkOutDate != null ? java.time.LocalDate.parse(checkOutDate) : null;
-        
-        org.springframework.data.jpa.domain.Specification<com.hotelbooking.entity.Room> specification = 
-                RoomSpecificationBuilder.build(id, name, roomNumber, minPriceDecimal, maxPriceDecimal, 
-                                             maxCapacity, checkIn, checkOut, hotelId);
-        
-        return roomService.searchRooms(specification, page, size, sortBy, sortDir);
+        return roomService.searchRoomsWithParams(
+                id, name, roomNumber, minPrice, maxPrice, maxCapacity, 
+                checkInDate, checkOutDate, hotelId, page, size, sortBy, sortDir);
     }
 
     @GetMapping("/available")
@@ -82,9 +74,6 @@ public class RoomController {
             @RequestParam String checkInDate,
             @RequestParam String checkOutDate) {
         
-        LocalDate checkIn = LocalDate.parse(checkInDate);
-        LocalDate checkOut = LocalDate.parse(checkOutDate);
-        
-        return roomService.getAvailableRooms(hotelId, checkIn, checkOut);
+        return roomService.getAvailableRoomsWithDateStrings(hotelId, checkInDate, checkOutDate);
     }
 }
