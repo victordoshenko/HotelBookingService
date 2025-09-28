@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <!-- 
+    Note: StatisticsEvent uses MongoDB, so this migration is not needed for PostgreSQL.
+    MongoDB collections and indexes are created automatically when first document is inserted.
+    This file is kept for consistency with the changelog structure.
+    -->
+
+    <changeSet id="005-create-statistics-event-table" author="hotel-booking-service">
+        <comment>StatisticsEvent uses MongoDB - no PostgreSQL table needed</comment>
+        <sql>
+            -- This is a placeholder for MongoDB collection
+            -- MongoDB collections are created automatically
+            -- when the first document is inserted
+        </sql>
+    </changeSet>
+
+</databaseChangeLog>

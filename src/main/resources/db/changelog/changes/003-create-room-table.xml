@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="003-create-room-table" author="hotel-booking-service">
+        <createTable tableName="rooms">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="description" type="VARCHAR(1000)">
+                <constraints nullable="true"/>
+            </column>
+            <column name="room_number" type="VARCHAR(50)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="price" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="max_capacity" type="INTEGER">
+                <constraints nullable="false"/>
+            </column>
+            <column name="hotel_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addCheckConstraint tableName="rooms" constraintName="ck_rooms_price"
+                          checkCondition="price >= 0"/>
+
+        <addCheckConstraint tableName="rooms" constraintName="ck_rooms_max_capacity"
+                          checkCondition="max_capacity >= 1 AND max_capacity <= 20"/>
+
+        <addForeignKeyConstraint baseTableName="rooms" baseColumnNames="hotel_id"
+                               constraintName="fk_rooms_hotel_id"
+                               referencedTableName="hotels" referencedColumnNames="id"/>
+
+        <createIndex tableName="rooms" indexName="idx_rooms_hotel_id">
+            <column name="hotel_id"/>
+        </createIndex>
+
+        <createIndex tableName="rooms" indexName="idx_rooms_room_number">
+            <column name="room_number"/>
+        </createIndex>
+
+        <createIndex tableName="rooms" indexName="idx_rooms_price">
+            <column name="price"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="003-create-room-unavailable-dates-table" author="hotel-booking-service">
+        <createTable tableName="room_unavailable_dates">
+            <column name="room_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unavailable_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint baseTableName="room_unavailable_dates" baseColumnNames="room_id"
+                               constraintName="fk_room_unavailable_dates_room_id"
+                               referencedTableName="rooms" referencedColumnNames="id"/>
+
+        <createIndex tableName="room_unavailable_dates" indexName="idx_room_unavailable_dates_room_id">
+            <column name="room_id"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

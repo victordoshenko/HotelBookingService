@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="004-create-booking-table" author="hotel-booking-service">
+        <createTable tableName="bookings">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="check_in_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="check_out_date" type="DATE">
+                <constraints nullable="false"/>
+            </column>
+            <column name="room_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <addCheckConstraint tableName="bookings" constraintName="ck_bookings_dates"
+                          checkCondition="check_out_date > check_in_date"/>
+
+        <addForeignKeyConstraint baseTableName="bookings" baseColumnNames="room_id"
+                               constraintName="fk_bookings_room_id"
+                               referencedTableName="rooms" referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint baseTableName="bookings" baseColumnNames="user_id"
+                               constraintName="fk_bookings_user_id"
+                               referencedTableName="users" referencedColumnNames="id"/>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_room_id">
+            <column name="room_id"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_user_id">
+            <column name="user_id"/>
+        </createIndex>
+
+        <createIndex tableName="bookings" indexName="idx_bookings_dates">
+            <column name="check_in_date"/>
+            <column name="check_out_date"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>

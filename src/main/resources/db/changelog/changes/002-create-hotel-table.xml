@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.20.xsd">
+
+    <changeSet id="002-create-hotel-table" author="hotel-booking-service">
+        <createTable tableName="hotels">
+            <column name="id" type="BIGSERIAL">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="name" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="title" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="city" type="VARCHAR(100)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="address" type="VARCHAR(500)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="distance_from_center" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="rating" type="DECIMAL(3,1)" defaultValue="1.0">
+                <constraints nullable="true"/>
+            </column>
+            <column name="number_of_ratings" type="INTEGER" defaultValue="0">
+                <constraints nullable="true"/>
+            </column>
+        </createTable>
+
+        <addCheckConstraint tableName="hotels" constraintName="ck_hotels_distance_from_center"
+                          checkCondition="distance_from_center >= 0"/>
+
+        <addCheckConstraint tableName="hotels" constraintName="ck_hotels_rating"
+                          checkCondition="rating >= 1.0 AND rating <= 5.0"/>
+
+        <addCheckConstraint tableName="hotels" constraintName="ck_hotels_number_of_ratings"
+                          checkCondition="number_of_ratings >= 0"/>
+
+        <createIndex tableName="hotels" indexName="idx_hotels_city">
+            <column name="city"/>
+        </createIndex>
+
+        <createIndex tableName="hotels" indexName="idx_hotels_rating">
+            <column name="rating"/>
+        </createIndex>
+    </changeSet>
+
+</databaseChangeLog>
