@@ -15,7 +15,6 @@ import com.hotelbooking.repository.RoomRepository;
 import com.hotelbooking.repository.UserRepository;
 import com.hotelbooking.statistics.event.BookingEvent;
 import com.hotelbooking.statistics.service.EventProducerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +35,6 @@ public class BookingService {
     private final BookingMapper bookingMapper;
     private final EventProducerService eventProducerService;
 
-    @Autowired
     public BookingService(BookingRepository bookingRepository, RoomRepository roomRepository, 
                          UserRepository userRepository, BookingMapper bookingMapper, EventProducerService eventProducerService) {
         this.bookingRepository = bookingRepository;

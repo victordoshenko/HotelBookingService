@@ -4,7 +4,6 @@ import com.hotelbooking.dto.UserRequestDto;
 import com.hotelbooking.dto.UserResponseDto;
 import com.hotelbooking.service.UserService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +14,6 @@ public class UserController {
 
     private final UserService userService;
 
-    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
     }

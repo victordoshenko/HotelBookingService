@@ -9,7 +9,6 @@ import com.hotelbooking.mapper.UserMapper;
 import com.hotelbooking.repository.UserRepository;
 import com.hotelbooking.statistics.event.UserRegistrationEvent;
 import com.hotelbooking.statistics.service.EventProducerService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +25,6 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final EventProducerService eventProducerService;
 
-    @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder, EventProducerService eventProducerService) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;

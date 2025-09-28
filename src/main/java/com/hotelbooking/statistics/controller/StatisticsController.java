@@ -2,7 +2,6 @@ package com.hotelbooking.statistics.controller;
 
 import com.hotelbooking.statistics.entity.StatisticsEvent;
 import com.hotelbooking.statistics.service.StatisticsService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -19,7 +18,6 @@ public class StatisticsController {
 
     private final StatisticsService statisticsService;
 
-    @Autowired
     public StatisticsController(StatisticsService statisticsService) {
         this.statisticsService = statisticsService;
     }

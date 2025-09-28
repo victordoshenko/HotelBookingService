@@ -3,7 +3,6 @@ package com.hotelbooking.statistics.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hotelbooking.statistics.event.BookingEvent;
 import com.hotelbooking.statistics.event.UserRegistrationEvent;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,6 @@ public class EventProducerService {
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final ObjectMapper objectMapper;
 
-    @Autowired
     public EventProducerService(KafkaTemplate<String, String> kafkaTemplate, ObjectMapper objectMapper) {
         this.kafkaTemplate = kafkaTemplate;
         this.objectMapper = objectMapper;

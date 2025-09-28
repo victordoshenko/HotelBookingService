@@ -12,7 +12,6 @@ import com.hotelbooking.repository.HotelRepository;
 import com.hotelbooking.repository.RoomRepository;
 import com.hotelbooking.repository.RoomSpecificationBuilder;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -34,7 +33,6 @@ public class RoomService {
     private final HotelRepository hotelRepository;
     private final RoomMapper roomMapper;
 
-    @Autowired
     public RoomService(RoomRepository roomRepository, HotelRepository hotelRepository, RoomMapper roomMapper) {
         this.roomRepository = roomRepository;
         this.hotelRepository = hotelRepository;

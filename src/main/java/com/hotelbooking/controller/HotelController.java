@@ -5,7 +5,6 @@ import com.hotelbooking.dto.HotelResponseDto;
 import com.hotelbooking.dto.PageResponseDto;
 import com.hotelbooking.service.HotelService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,7 +17,6 @@ public class HotelController {
 
     private final HotelService hotelService;
 
-    @Autowired
     public HotelController(HotelService hotelService) {
         this.hotelService = hotelService;
     }

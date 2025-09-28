@@ -2,7 +2,6 @@ package com.hotelbooking.security;
 
 import com.hotelbooking.entity.User;
 import com.hotelbooking.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,8 +13,11 @@ import java.util.Collections;
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+
+    public UserDetailsServiceImpl(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

@@ -2,7 +2,6 @@ package com.hotelbooking.statistics.service;
 
 import com.hotelbooking.statistics.entity.StatisticsEvent;
 import com.hotelbooking.statistics.repository.StatisticsEventRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
@@ -19,7 +18,6 @@ public class StatisticsService {
 
     private final StatisticsEventRepository statisticsEventRepository;
 
-    @Autowired
     public StatisticsService(StatisticsEventRepository statisticsEventRepository) {
         this.statisticsEventRepository = statisticsEventRepository;
     }
