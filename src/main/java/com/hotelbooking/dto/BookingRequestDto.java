@@ -2,9 +2,15 @@ package com.hotelbooking.dto;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Future;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class BookingRequestDto {
 
     @NotNull(message = "Check-in date is required")
@@ -17,38 +23,4 @@ public class BookingRequestDto {
 
     @NotNull(message = "Room ID is required")
     private Long roomId;
-
-    // Constructors
-    public BookingRequestDto() {}
-
-    public BookingRequestDto(LocalDate checkInDate, LocalDate checkOutDate, Long roomId) {
-        this.checkInDate = checkInDate;
-        this.checkOutDate = checkOutDate;
-        this.roomId = roomId;
-    }
-
-    // Getters and Setters
-    public LocalDate getCheckInDate() {
-        return checkInDate;
-    }
-
-    public void setCheckInDate(LocalDate checkInDate) {
-        this.checkInDate = checkInDate;
-    }
-
-    public LocalDate getCheckOutDate() {
-        return checkOutDate;
-    }
-
-    public void setCheckOutDate(LocalDate checkOutDate) {
-        this.checkOutDate = checkOutDate;
-    }
-
-    public Long getRoomId() {
-        return roomId;
-    }
-
-    public void setRoomId(Long roomId) {
-        this.roomId = roomId;
-    }
 }

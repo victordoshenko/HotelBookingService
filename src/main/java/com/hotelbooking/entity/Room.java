@@ -2,6 +2,9 @@ package com.hotelbooking.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -10,6 +13,9 @@ import java.util.List;
 
 @Entity
 @Table(name = "rooms")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Room {
 
     @Id
@@ -52,103 +58,4 @@ public class Room {
 
     @OneToMany(mappedBy = "room", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<Booking> bookings = new ArrayList<>();
-
-    // Constructors
-    public Room() {}
-
-    public Room(String name, String description, String roomNumber, BigDecimal price, 
-                Integer maxCapacity, Hotel hotel) {
-        this.name = name;
-        this.description = description;
-        this.roomNumber = roomNumber;
-        this.price = price;
-        this.maxCapacity = maxCapacity;
-        this.hotel = hotel;
-    }
-
-    // Getters and Setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void setMaxCapacity(Integer maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public List<LocalDate> getUnavailableDates() {
-        return unavailableDates;
-    }
-
-    public void setUnavailableDates(List<LocalDate> unavailableDates) {
-        this.unavailableDates = unavailableDates;
-    }
-
-    public Hotel getHotel() {
-        return hotel;
-    }
-
-    public void setHotel(Hotel hotel) {
-        this.hotel = hotel;
-    }
-
-    public List<Booking> getBookings() {
-        return bookings;
-    }
-
-    public void setBookings(List<Booking> bookings) {
-        this.bookings = bookings;
-    }
-
-    @Override
-    public String toString() {
-        return "Room{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", roomNumber='" + roomNumber + '\'' +
-                ", price=" + price +
-                ", maxCapacity=" + maxCapacity +
-                ", hotel=" + (hotel != null ? hotel.getId() : null) +
-                '}';
-    }
 }

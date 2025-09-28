@@ -1,10 +1,16 @@
 package com.hotelbooking.dto;
 
 import jakarta.validation.constraints.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.List;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class RoomRequestDto {
 
     @NotBlank(message = "Room name is required")
@@ -31,74 +37,4 @@ public class RoomRequestDto {
     private Long hotelId;
 
     private List<String> unavailableDates;
-
-    // Constructors
-    public RoomRequestDto() {}
-
-    public RoomRequestDto(String name, String description, String roomNumber, BigDecimal price, 
-                         Integer maxCapacity, Long hotelId) {
-        this.name = name;
-        this.description = description;
-        this.roomNumber = roomNumber;
-        this.price = price;
-        this.maxCapacity = maxCapacity;
-        this.hotelId = hotelId;
-    }
-
-    // Getters and Setters
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getRoomNumber() {
-        return roomNumber;
-    }
-
-    public void setRoomNumber(String roomNumber) {
-        this.roomNumber = roomNumber;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    public Integer getMaxCapacity() {
-        return maxCapacity;
-    }
-
-    public void setMaxCapacity(Integer maxCapacity) {
-        this.maxCapacity = maxCapacity;
-    }
-
-    public Long getHotelId() {
-        return hotelId;
-    }
-
-    public void setHotelId(Long hotelId) {
-        this.hotelId = hotelId;
-    }
-
-    public List<String> getUnavailableDates() {
-        return unavailableDates;
-    }
-
-    public void setUnavailableDates(List<String> unavailableDates) {
-        this.unavailableDates = unavailableDates;
-    }
 }
