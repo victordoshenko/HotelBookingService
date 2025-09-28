@@ -9,7 +9,6 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
@@ -27,52 +26,48 @@ public class HotelController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<HotelResponseDto> getHotelById(@PathVariable Long id) {
-        HotelResponseDto hotel = hotelService.getHotelById(id);
-        return ResponseEntity.ok(hotel);
+    public HotelResponseDto getHotelById(@PathVariable Long id) {
+        return hotelService.getHotelById(id);
     }
 
     @PostMapping
-    public ResponseEntity<HotelResponseDto> createHotel(@Valid @RequestBody HotelRequestDto hotelRequestDto) {
-        HotelResponseDto createdHotel = hotelService.createHotel(hotelRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdHotel);
+    @ResponseStatus(HttpStatus.CREATED)
+    public HotelResponseDto createHotel(@Valid @RequestBody HotelRequestDto hotelRequestDto) {
+        return hotelService.createHotel(hotelRequestDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<HotelResponseDto> updateHotel(
+    public HotelResponseDto updateHotel(
             @PathVariable Long id, 
             @Valid @RequestBody HotelRequestDto hotelRequestDto) {
-        HotelResponseDto updatedHotel = hotelService.updateHotel(id, hotelRequestDto);
-        return ResponseEntity.ok(updatedHotel);
+        return hotelService.updateHotel(id, hotelRequestDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteHotel(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteHotel(@PathVariable Long id) {
         hotelService.deleteHotel(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
-    public ResponseEntity<PageResponseDto<HotelResponseDto>> getAllHotels(
+    public PageResponseDto<HotelResponseDto> getAllHotels(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(defaultValue = "id") String sortBy,
             @RequestParam(defaultValue = "asc") String sortDir) {
         
-        PageResponseDto<HotelResponseDto> hotels = hotelService.getAllHotels(page, size, sortBy, sortDir);
-        return ResponseEntity.ok(hotels);
+        return hotelService.getAllHotels(page, size, sortBy, sortDir);
     }
 
     @PutMapping("/{id}/rating")
-    public ResponseEntity<HotelResponseDto> updateHotelRating(
+    public HotelResponseDto updateHotelRating(
             @PathVariable Long id, 
             @RequestParam BigDecimal rating) {
-        HotelResponseDto updatedHotel = hotelService.updateHotelRating(id, rating);
-        return ResponseEntity.ok(updatedHotel);
+        return hotelService.updateHotelRating(id, rating);
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PageResponseDto<HotelResponseDto>> searchHotels(
+    public PageResponseDto<HotelResponseDto> searchHotels(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String title,
@@ -89,8 +84,6 @@ public class HotelController {
         Specification<Hotel> specification = HotelSpecificationBuilder.build(
                 id, name, title, city, address, distanceFromCenter, rating, numberOfRatings);
         
-        PageResponseDto<HotelResponseDto> hotels = hotelService.searchHotels(
-                specification, page, size, sortBy, sortDir);
-        return ResponseEntity.ok(hotels);
+        return hotelService.searchHotels(specification, page, size, sortBy, sortDir);
     }
 }

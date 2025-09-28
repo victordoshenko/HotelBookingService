@@ -6,7 +6,6 @@ import com.hotelbooking.service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -22,34 +21,31 @@ public class UserController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<UserResponseDto> registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto createdUser = userService.createUser(userRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdUser);
+    @ResponseStatus(HttpStatus.CREATED)
+    public UserResponseDto registerUser(@Valid @RequestBody UserRequestDto userRequestDto) {
+        return userService.createUser(userRequestDto);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserResponseDto> getUserById(@PathVariable Long id) {
-        UserResponseDto user = userService.getUserById(id);
-        return ResponseEntity.ok(user);
+    public UserResponseDto getUserById(@PathVariable Long id) {
+        return userService.getUserById(id);
     }
 
     @GetMapping("/username/{username}")
-    public ResponseEntity<UserResponseDto> getUserByUsername(@PathVariable String username) {
-        UserResponseDto user = userService.getUserByUsername(username);
-        return ResponseEntity.ok(user);
+    public UserResponseDto getUserByUsername(@PathVariable String username) {
+        return userService.getUserByUsername(username);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserResponseDto> updateUser(
+    public UserResponseDto updateUser(
             @PathVariable Long id, 
             @Valid @RequestBody UserRequestDto userRequestDto) {
-        UserResponseDto updatedUser = userService.updateUser(id, userRequestDto);
-        return ResponseEntity.ok(updatedUser);
+        return userService.updateUser(id, userRequestDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable Long id) {
         userService.deleteUser(id);
-        return ResponseEntity.noContent().build();
     }
 }

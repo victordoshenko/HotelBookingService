@@ -7,7 +7,6 @@ import com.hotelbooking.service.RoomService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -26,33 +25,31 @@ public class RoomController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RoomResponseDto> getRoomById(@PathVariable Long id) {
-        RoomResponseDto room = roomService.getRoomById(id);
-        return ResponseEntity.ok(room);
+    public RoomResponseDto getRoomById(@PathVariable Long id) {
+        return roomService.getRoomById(id);
     }
 
     @PostMapping
-    public ResponseEntity<RoomResponseDto> createRoom(@Valid @RequestBody RoomRequestDto roomRequestDto) {
-        RoomResponseDto createdRoom = roomService.createRoom(roomRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdRoom);
+    @ResponseStatus(HttpStatus.CREATED)
+    public RoomResponseDto createRoom(@Valid @RequestBody RoomRequestDto roomRequestDto) {
+        return roomService.createRoom(roomRequestDto);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RoomResponseDto> updateRoom(
+    public RoomResponseDto updateRoom(
             @PathVariable Long id, 
             @Valid @RequestBody RoomRequestDto roomRequestDto) {
-        RoomResponseDto updatedRoom = roomService.updateRoom(id, roomRequestDto);
-        return ResponseEntity.ok(updatedRoom);
+        return roomService.updateRoom(id, roomRequestDto);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteRoom(@PathVariable Long id) {
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteRoom(@PathVariable Long id) {
         roomService.deleteRoom(id);
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<PageResponseDto<RoomResponseDto>> searchRooms(
+    public PageResponseDto<RoomResponseDto> searchRooms(
             @RequestParam(required = false) Long id,
             @RequestParam(required = false) String name,
             @RequestParam(required = false) String roomNumber,
@@ -76,13 +73,11 @@ public class RoomController {
                 RoomSpecificationBuilder.build(id, name, roomNumber, minPriceDecimal, maxPriceDecimal, 
                                              maxCapacity, checkIn, checkOut, hotelId);
         
-        PageResponseDto<RoomResponseDto> rooms = roomService.searchRooms(
-                specification, page, size, sortBy, sortDir);
-        return ResponseEntity.ok(rooms);
+        return roomService.searchRooms(specification, page, size, sortBy, sortDir);
     }
 
     @GetMapping("/available")
-    public ResponseEntity<List<RoomResponseDto>> getAvailableRooms(
+    public List<RoomResponseDto> getAvailableRooms(
             @RequestParam Long hotelId,
             @RequestParam String checkInDate,
             @RequestParam String checkOutDate) {
@@ -90,7 +85,6 @@ public class RoomController {
         LocalDate checkIn = LocalDate.parse(checkInDate);
         LocalDate checkOut = LocalDate.parse(checkOutDate);
         
-        List<RoomResponseDto> availableRooms = roomService.getAvailableRooms(hotelId, checkIn, checkOut);
-        return ResponseEntity.ok(availableRooms);
+        return roomService.getAvailableRooms(hotelId, checkIn, checkOut);
     }
 }
